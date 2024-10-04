@@ -7,7 +7,7 @@ class Nave:
         self.screen_rect = ia_game.screen.get_rect()
         self.settings = ia_game.settings #pega as configurações
  
-        self.imagem = pygame.image.load('img/nave.bmp')
+        self.imagem = pygame.image.load('img/nave.png')
         self.rect = self.imagem.get_rect()
  
         self.rect.midbottom = self.screen_rect.midbottom
