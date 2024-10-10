@@ -13,9 +13,12 @@ class Nave:
         self.rect.midbottom = self.screen_rect.midbottom
  
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
  
         self.mover_direita = False
         self.mover_esquerda = False
+        self.mover_cima = False
+        self.mover_baixo = False
  
  
     def update(self):
@@ -24,12 +27,20 @@ class Nave:
  
         if self.mover_esquerda and self.rect.left > 0:
             self.x -= self.settings.velocidade_nave
+            
+        if self.mover_cima and self.rect.top > 0:
+            self.y -= self.settings.velocidade_nave
  
+        if self.mover_baixo and self.rect.bottom < self.screen_rect.bottom:
+            self.y += self.settings.velocidade_nave
+ 
+        self.rect.y = self.y
         self.rect.x = self.x
  
     def center_nave(self):
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
  
     def blitme(self):
         """

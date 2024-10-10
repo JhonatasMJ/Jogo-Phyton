@@ -9,9 +9,8 @@ class InvasaoAlienigena:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-        
-        # Carregar a imagem de fundo e escalá-la
-        self.bg_image = pygame.image.load('img/fundo.jpg')  # Ajuste o caminho se necessário
+  
+        self.bg_image = pygame.image.load('img/fundo.jpg') 
         self.bg_image = pygame.transform.scale(self.bg_image, (self.settings.largura_tela, self.settings.altura_tela))
         
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
