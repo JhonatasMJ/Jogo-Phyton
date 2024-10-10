@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from nave import Nave
 from missel import Missel
+from alien import Alien
 
 class InvasaoAlienigena:
     def __init__(self):
@@ -20,12 +21,15 @@ class InvasaoAlienigena:
         pygame.display.set_caption("Invasão Alienígena")
         self.nave = Nave(self)
         self.missel = pygame.sprite.Group()
+        self.alien = pygame.sprite.Group()
+        self._criar_frota()
    
     def jogo_on(self):
         while True:
             self._checar_eventos()
             self.nave.update()
             self._atualiza_missel()
+            self._atualiza_aliens()
             self._atualiza_tela()
 
     def _checar_eventos(self):
@@ -70,7 +74,28 @@ class InvasaoAlienigena:
         self.missel.update()
         for missel in self.missel.copy():
             if missel.rect.bottom <= 0:
-                self.missel.remove(missel)            
+                self.missel.remove(missel)  
+                
+    def _atualiza_aliens(self):
+        self.alien.update()            
+
+    def _criar_frota(self):
+        alien = Alien(self)
+        self.alien.add(alien)   
+        alien_largura, alien_altura = alien.rect.size
+
+        current_x, current_y = alien_largura, alien_altura
+        while current_y < (self.settings.altura_tela - 3 * alien_altura):
+            self._criar_alien(current_x,current_y)
+            current_x += 2 * alien_altura 
+
+    def _criar_alien(self, x_position, y_position):
+            novo_alien = Alien(self)
+            novo_alien.x = x_position
+            novo_alien.rect.x = x_position
+            novo_alien.rect.y = y_position
+            self.alien.add(novo_alien)
+                  
 
     def _atualiza_tela(self):    
         # Desenha a imagem de fundo
@@ -79,7 +104,7 @@ class InvasaoAlienigena:
         for missel in self.missel.sprites():
             missel.gerar_missel()
         self.nave.blitme()
-        
+        self.alien.draw(self.screen)
         # Atualiza a tela
         pygame.display.flip()
         self.clock.tick(60) 
